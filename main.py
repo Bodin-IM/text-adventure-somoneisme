@@ -9,9 +9,10 @@ oxygen = 1000
 stamina = 100
 outsideHeat = random.randint(1,100)
 climbingPoints = random.randint(1,2)
-print(climbingPoints)
 pointsClimed = 0
-
+walkingSpeed = 0
+inStartRoom = True
+distanceWalked = 0
 
 
 def bleeding():
@@ -44,6 +45,7 @@ def climbing(wallType):
             else:
                 pointsClimed += 10
                 print("you failed")
+                break
     if wallType == 3:
         while pointsClimed < 100:
             pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
@@ -60,8 +62,24 @@ def climbing(wallType):
                 print("you did it")
     stamina -= pointsClimed
 
-def wall():
-    print("yes")
+
+
+def startRoom(distance):
+    global stamina, heat, outsideHeat, inStartRoom, distanceWalked
+    if inStartRoom == True:
+        distance = 20
+        distanceWalked = input("the room is 20 feet long how far do you want to walk ")
+        if distanceWalked > 10:
+            print(f"you walked{distanceWalked}feet there is a campfire")
+
+            
+
+
+        
+        
+
+    
+
     
     
     
