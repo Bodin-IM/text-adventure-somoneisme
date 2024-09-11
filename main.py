@@ -8,7 +8,7 @@ bleed = 0
 oxygen = 1000
 stamina = 100
 outsideHeat = random.randint(1,100)
-climbingPoints = randint(1,2)
+climbingPoints = random.randint(1,2)
 print(climbingPoints)
 pointsClimed = 0
 
@@ -22,16 +22,8 @@ def climbing(wallType):
     global stamina, climbingPoints, pointsClimed
     print("you started to climb the wall")
     if wallType == 1:
-        pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
-        pointToClimb = int(pointToClimb)
-        if pointToClimb == climbingPoints:
-            print("you moved up")
-            pointsClimed += 10
-        else:
-            pointsClimed += 10
-            print("you failed")
         while pointsClimed < 30:
-                climbingPoints == randint(1,2)
+                climbingPoints = randint(1,2)
                 pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
                 pointToClimb = int(pointToClimb)
                 if pointToClimb == climbingPoints:
@@ -42,15 +34,8 @@ def climbing(wallType):
                     print("you failed")
                     break
     if wallType == 2:
-        pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
-        pointToClimb = int(pointToClimb)
-        if pointToClimb == climbingPoints:
-            print("you moved up")
-            pointsClimed += 10
-        else:
-            pointsClimed += 10
-            print("you failed")
         while pointsClimed < 50:
+            climbingPoints = randint(1,2)
             pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
             pointToClimb = int(pointToClimb)
             if pointToClimb == climbingPoints:
@@ -62,11 +47,11 @@ def climbing(wallType):
     if wallType == 3:
         while pointsClimed < 100:
             pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
+            climbingPoints = randint(1,2)
             pointToClimb = int(pointToClimb)
             if pointToClimb == climbingPoints:
                 print("you moved up")
                 pointsClimed += 10
-                climbingPoints == randint(1,2)
             else:
                 pointsClimed += 10
                 print("you failed")
