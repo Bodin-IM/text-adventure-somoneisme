@@ -13,8 +13,12 @@ pointsClimed = 0
 walkingSpeed = 0
 inStartRoom = True
 distanceWalked = 0
-
-
+playerPosition = 0
+distance = 0
+landmarkPosition = 0
+answer = 0
+    
+    
 def bleeding():
     global bleed, health
     health -= bleed
@@ -61,28 +65,63 @@ def climbing(wallType):
             if pointsClimed == 100:
                 print("you did it")
     stamina -= pointsClimed
+def campfire(position):
+    global playerPosition
+    campfirePosition = position - playerPosition
+    print(f"there is a campfire {campfirePosition} feet away")
+    if playerPosition == campfirePosition:
+        print("you are at the campfire")
+    elif playerPosition < 0:
+        campfirePosition *= -1
+        print(f"there is a campfire at {abs(campfirePosition)} feet behind you")
+def roomExit(position):
+    global playerPosition, answer
+    exitPosition = position - playerPosition
+    print(f"the exit to the room is {exitPosition} feet away")
+    if playerPosition == position:
+        print("you are now at the exit to the room")
+        print("do you want to go through tpye yes or no")
+        answer = input(": ").lower()
+        if answer == "yes":
+            room(2)
+    elif answer == "no":
+        room(1)
+def walking():
+    global stamina, playerPosition, distanceWalked
+    distanceWalked = input(f"the room is {distance} feet long you are at {playerPosition} feet through how far do you want to walk ")
+    distanceWalked = int(distanceWalked)
+    stamina -= distanceWalked
+    playerPosition += distanceWalked
+    if playerPosition > distance:
+            playerPosition = distance
+    print(f"you walked {distanceWalked} feet and are now at {playerPosition}")
+    print(f"you now have {stamina} stamina left")
+def wall(position):
+    global stamina, playerPosition
+    wallposition = playerPosition - position
+    print(f"there is a wall {wallposition} feet away from you")
+
+    
 
 
-
-def startRoom(distance):
-    global stamina, heat, outsideHeat, inStartRoom, distanceWalked
-    if inStartRoom == True:
+def room(roomType):
+    global stamina, heat, outsideHeat, inStartRoom, distanceWalked, playerPosition, distance, health 
+    while roomType == 1:
         distance = 20
-        distanceWalked = input("the room is 20 feet long how far do you want to walk ")
-        if distanceWalked > 10:
-            print(f"you walked{distanceWalked}feet there is a campfire")
+        walking()
 
-            
+        campfire(10)
+        roomExit(position=20)
+        if answer =="yes":
+            break
+    if roomType == 2:
+        playerPosition = 0    
+        while roomType == 2:
+            distance = 40
+            walking()
+            wall(30)
 
 
-        
-        
-
-    
-
-    
-    
-    
 def dayPass():
 
     global bleed, health, oxygen, food, water, heat, stamina
@@ -128,10 +167,12 @@ if answer == "b":
             print("you gained 20 warmth")
             heat += 20
             dayPass()
+            room(1)
         if answer == "b":
             print("you slept for the night and gained 20 stamina")
             stamina += 20
             dayPass()
-    if answer == "b":
+            room(1)
+    elif answer == "b":
         print("you walk for a whole day and pass out")
         dayPass()
