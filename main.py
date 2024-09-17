@@ -98,8 +98,14 @@ def walking():
     print(f"you now have {stamina} stamina left")
 def wall(position):
     global stamina, playerPosition
-    wallposition = playerPosition - position
+    wallposition = position - playerPosition
+    if playerPosition == position:
+        print("no")
+    if playerPosition > position:
+        playerPosition = position
+        wallposition = 0
     print(f"there is a wall {wallposition} feet away from you")
+        
 
     
 
