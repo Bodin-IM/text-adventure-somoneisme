@@ -20,15 +20,30 @@ answer = 0
 climbingTrue = 0
 endingTryAgain = False
     
-    
+def check():
+    if input(f"you can type c to check your stats if you dont want to type no: "):
+        print(f"you have {health} health, {stamina} stamina, {heat} heat,")
 def bleeding():
     global bleed, health
     health -= bleed
 def climbing(wallType):
     global stamina, climbingPoints, pointsClimed
-    print("you started to climb the wall")
-    if wallType == 1:
-        while pointsClimed < 30:
+    if stamina > 0:
+        print("you started to climb the wall")
+        if wallType == 1:
+            while pointsClimed < 30:
+                    climbingPoints = randint(1,2)
+                    pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
+                    pointToClimb = int(pointToClimb)
+                    if pointToClimb == climbingPoints:
+                        print("you moved up")
+                        pointsClimed += 10
+                    else:
+                        pointsClimed += 10
+                        print("you failed")
+                        break
+        if wallType == 2:
+            while pointsClimed < 50:
                 climbingPoints = randint(1,2)
                 pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
                 pointToClimb = int(pointToClimb)
@@ -39,33 +54,23 @@ def climbing(wallType):
                     pointsClimed += 10
                     print("you failed")
                     break
-    if wallType == 2:
-        while pointsClimed < 50:
-            climbingPoints = randint(1,2)
-            pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
-            pointToClimb = int(pointToClimb)
-            if pointToClimb == climbingPoints:
-                print("you moved up")
-                pointsClimed += 10
-            else:
-                pointsClimed += 10
-                print("you failed")
-                break
-    if wallType == 3:
-        while pointsClimed < 100:
-            pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
-            climbingPoints = randint(1,2)
-            pointToClimb = int(pointToClimb)
-            if pointToClimb == climbingPoints:
-                print("you moved up")
-                pointsClimed += 10
-            else:
-                pointsClimed += 10
-                print("you failed")
-                break
-            if pointsClimed == 100:
-                print("you did it")
-    stamina -= pointsClimed
+        if wallType == 3:
+            while pointsClimed < 100:
+                pointToClimb = input("type one or two to pick wich rock you want to climb on. and type down if you want to go down ")
+                climbingPoints = randint(1,2)
+                pointToClimb = int(pointToClimb)
+                if pointToClimb == climbingPoints:
+                    print("you moved up")
+                    pointsClimed += 10
+                else:
+                    pointsClimed += 10
+                    print("you failed")
+                    break
+                if pointsClimed == 100:
+                    print("you did it")
+        stamina -= pointsClimed
+    else:
+        print("you do not have enough stamina to climb the wall")
 def campfire(position):
     global playerPosition
     campfirePosition = position - playerPosition
@@ -109,13 +114,15 @@ def walking():
             playerPosition = distance
     print(f"you walked {distanceWalked} feet and are now at {playerPosition}")
     print(f"you now have {stamina} stamina left")
-def wall(position):
+def wall(position,wallType):
     global stamina, playerPosition, climbingTrue
     wallposition = position - playerPosition
     if playerPosition == position:
         print("you now stand at the wall")
         print("do you want to try to climb it")
         climbingTrue = input("yes or no ").lower()
+        if climbingTrue == "yes":
+            climbing(wallType)
        
     if playerPosition > position:
         playerPosition = position
@@ -133,15 +140,15 @@ def room(roomType, roomLength,exitPosition,playerPoint, hasWall=False,wallPositi
     playerPosition = playerPoint
     while True:
         if hasWall:
-            wall(wallPosition)
-            if climbingTrue == "yes":
-                climbing(wallType)
+            wall(wallPosition,wallType)
+
         if hasCampfire:
             campfire(campfirePosition)
         if hasExit:
             roomExit(exitPosition)
         if HasStart:
             roomStart(StartPosition,roomType)
+        check()
         walking()
 
 
