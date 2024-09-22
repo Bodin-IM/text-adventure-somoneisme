@@ -121,6 +121,10 @@ def walking():
     playerPosition += distanceWalked
     if playerPosition > distance:
             playerPosition = distance
+    elif stamina == 0 or stamina < 0:
+        print("you did not have enough stamina to walk any more")
+        playerPosition -= distanceWalked
+        distanceWalked = 0 
     print(f"you walked {distanceWalked} feet and are now at {playerPosition}")
     print(f"you now have {stamina} stamina left")
 def wall(positionOfWall,wallType):
