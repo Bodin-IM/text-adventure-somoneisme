@@ -19,7 +19,22 @@ landmarkPosition = 0
 answer = 0
 climbingTrue = 0
 endingTryAgain = False
+def betterInput(word1=None,word2=None):
+    inputAnswer = False
+    while inputAnswer == False:
+        inputAnswer = input(": ")
+        if inputAnswer == word1:
+            inputAnswer = word1
+            word1
+        elif inputAnswer == word2:
+            inputAnswer = word2
+            return word2
+        else:
+            print("not good enough try again")
+            inputAnswer = False
+        
     
+
 def check():
     if input(f"you can type c to check your stats if you dont want to type no: "):
         print(f"you have {health} health, {stamina} stamina, {heat} heat,")
@@ -79,7 +94,10 @@ def climbing(wallType):
         stamina -= pointsClimed
     else:
         print("you do not have enough stamina to climb the wall")
-    
+def Rest():
+    global stamina
+    print("do you want to rest type yes or no")
+    Answer = betterInput("yes","no")
 def campfire(position):
     global playerPosition
     campfirePosition = position - playerPosition
@@ -176,6 +194,7 @@ def room(roomType, roomLength,exitPosition,playerPoint, hasWall=False,wallPositi
             roomStart(StartPosition,roomType)
         check()
         walking()
+        Rest()
 
 
 
