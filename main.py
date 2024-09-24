@@ -25,7 +25,7 @@ def betterInput(word1=None,word2=None):
         inputAnswer = input(": ")
         if inputAnswer == word1:
             inputAnswer = word1
-            word1
+            return word1
         elif inputAnswer == word2:
             inputAnswer = word2
             return word2
