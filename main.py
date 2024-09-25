@@ -1,12 +1,18 @@
 import random
 from random import randint
+stats=["health","food","water","heat","stamina"]
 health = 100
+stats.append(health)
 food = 100
+stats.append(food)
 water = 100 
+stats.append(water)
 heat = 100
+stats.append(heat)
 bleed = 0
 oxygen = 1000
 stamina = 100
+stats.append(stamina)
 outsideHeat = random.randint(1,100)
 climbingPoints = random.randint(1,2)
 pointsClimed = 0
@@ -19,25 +25,38 @@ landmarkPosition = 0
 answer = 0
 climbingTrue = 0
 endingTryAgain = False
-def betterInput(word1=None,word2=None):
+player = {
+    "health":100,
+    "food":100,
+    "water":100,
+    "heat":100,
+    "stamina":100
+}
+def betterInput(yes=None,no=None,Resting=False,Check=False):
+    global stamina
     inputAnswer = False
     while inputAnswer == False:
         inputAnswer = input(": ")
-        if inputAnswer == word1:
-            inputAnswer = word1
-            return word1
-        elif inputAnswer == word2:
-            inputAnswer = word2
-            return word2
+        if inputAnswer == yes and Resting == True:
+            inputAnswer = yes
+            stamina = 100
+            print(f"you rested and gained {stamina} stamina")
+        elif inputAnswer == no and Resting == True:
+            inputAnswer = no
+            print("you did not rest")
+        if inputAnswer == yes and Check == True:
+            print(player)
+        elif inputAnswer == no and Check == True:
+            print("you did not check your stats")
         else:
             print("not good enough try again")
-            inputAnswer = False
-        
+            inputAnswer = False     
     
 
 def check():
-    if input(f"you can type c to check your stats if you dont want to type no: "):
-        print(f"you have {health} health, {stamina} stamina, {heat} heat,")
+    print("do you want to check your stats")
+    betterInput("yes","no",False,True)
+    
 def bleeding():
     global bleed, health
     health -= bleed
@@ -94,10 +113,11 @@ def climbing(wallType):
         stamina -= pointsClimed
     else:
         print("you do not have enough stamina to climb the wall")
+        Rest()
 def Rest():
-    global stamina
+    global stamina,distanceWalked
     print("do you want to rest type yes or no")
-    Answer = betterInput("yes","no")
+    Answer = betterInput("yes","no",True)
 def campfire(position):
     global playerPosition
     campfirePosition = position - playerPosition
@@ -141,6 +161,7 @@ def walking():
             playerPosition = distance
     elif stamina == 0 or stamina < 0:
         print("you did not have enough stamina to walk any more")
+        Rest()
         playerPosition -= distanceWalked
         distanceWalked = 0 
     print(f"you walked {distanceWalked} feet and are now at {playerPosition}")
@@ -159,6 +180,7 @@ def wall(positionOfWall,wallType):
             if climbingWin:
                 ClimbingWinAgain = climbingWin
                 playerPosition = positionOfWall + 1
+                print(playerPosition)
                 return climbingWin
             elif climbingWin and ClimbingWinAgain:
                 playerPosition = positionOfWall - 1
@@ -194,7 +216,6 @@ def room(roomType, roomLength,exitPosition,playerPoint, hasWall=False,wallPositi
             roomStart(StartPosition,roomType)
         check()
         walking()
-        Rest()
 
 
 
